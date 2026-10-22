@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Piksel — editor piksel 32×32 di peramban</title>
+<meta name="description" content="Editor piksel kecil untuk membuat sprite dan ikon. 12 warna, kisi, cermin, ekspor PNG. Berjalan sepenuhnya di peramban, tanpa akun dan tanpa unggahan.">
+<meta name="theme-color" content="#16161a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=2">
+<meta property="og:title" content="Piksel — editor piksel 32×32">
+<meta property="og:description" content="Gambar sprite, simpan, ekspor PNG. Semua di peramban.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://atmajadesna.github.io/piksel/">
+</head>
+<body>
+
+<header class="pita">
+  <div class="pita__isi">
+    <a class="tanda" href="#atas" aria-label="Piksel, ke atas">
+      <span class="tanda__kotak" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      Piksel
+    </a>
+    <nav class="pita__nav" aria-label="Navigasi utama">
+      <a href="#cara">Cara pakai</a>
+      <a href="https://github.com/atmajadesna/piksel">Kode</a>
+    </nav>
+  </div>
+</header>
+
+<main id="atas">
+
+  <section class="kepala">
+    <h1>Editor piksel 32 × 32</h1>
+    <p class="kepala__ket">
+      Untuk membuat sprite, ikon, dan pola kecil. Gambar di sini, simpan di perangkat,
+      ekspor PNG. Tidak ada akun dan tidak ada berkas yang diunggah ke mana pun.
+    </p>
+  </section>
+
+  <section class="meja" aria-label="Meja kerja editor">
+
+    <div class="kanvas-bingkai">
+      <div class="kanvas-bungkus" id="bungkus" data-kisi="nyala" style="--sel: 3.125%">
+        <canvas id="kanvas" width="32" height="32" tabindex="0"
+                aria-label="Kanvas piksel 32 kali 32. Gambar dengan tetikus atau sentuhan. Gunakan tombol alat di panel untuk mengganti alat."></canvas>
+        <canvas id="pratinjau" width="32" height="32" aria-hidden="true"></canvas>
+      </div>
+      <p class="kanvas-ket">
+        <span><b id="info-ukuran">32 × 32</b></span>
+        <span aria-hidden="true">·</span>
+        <span id="info-alat">pensil</span>
+        <span aria-hidden="true">·</span>
+        <span id="info-pos">baris — kolom —</span>
+      </p>
+    </div>
+
+    <aside class="panel" aria-label="Panel alat">
+
+      <div>
+        <p class="blok__judul">Alat <span id="label-alat">pensil</span></p>
+        <div class="alat" role="group" aria-label="Pilih alat">
+          <button class="tombol-alat" type="button" data-alat="pensil" aria-pressed="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 20l4-1 9-9-3-3-9 9-1 4z"/><path d="M14 6l3 3"/></svg>
+            pensil
+          </button>
+          <button class="tombol-alat" type="button" data-alat="penghapus" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M8 20H5l-2-2 9-9 6 6-5 5z"/><path d="M12 9l3-3 6 6-3 3"/></svg>
+            hapus
+          </button>
+          <button class="tombol-alat" type="button" data-alat="isi" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 13l7-7 6 6-7 7-6-6z"/><path d="M17 15c1.5 2 2 3 2 4a2 2 0 1 1-4 0c0-1 .5-2 2-4z"/></svg>
+            isi
+          </button>
+          <button class="tombol-alat" type="button" data-alat="garis" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 19L19 5"/><rect x="3" y="17" width="4" height="4"/><rect x="17" y="3" width="4" height="4"/></svg>
+            garis
+          </button>
+          <button class="tombol-alat" type="button" data-alat="pipet" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M15 4l5 5-9 9H6v-5l9-9z"/><path d="M13 6l5 5"/></svg>
+            pipet
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <p class="blok__judul">Warna <span id="label-warna">#16161a</span></p>
+        <div class="warna" id="warna" role="group" aria-label="Pilih warna"></div>
+        <div class="warna-khusus">
+          <input type="color" id="warna-khusus" value="#16161a" aria-label="Warna khusus">
+          <span>warna lain</span>
+        </div>
+      </div>
+
+      <div>
+        <p class="blok__judul">Kanvas</p>
+        <div class="baris" role="group" aria-label="Ukuran kanvas">
+          <button class="pil" type="button" data-ukuran="16" aria-pressed="false">16</button>
+          <button class="pil" type="button" data-ukuran="24" aria-pressed="false">24</button>
+          <button class="pil" type="button" data-ukuran="32" aria-pressed="true">32</button>
+          <button class="pil" type="button" data-ukuran="48" aria-pressed="false">48</button>
+        </div>
+        <div class="baris" style="margin-top: 8px" role="group" aria-label="Bantuan gambar">
+          <button class="pil" type="button" id="sakelar-kisi" aria-pressed="true">kisi</button>
+          <button class="pil" type="button" id="sakelar-cermin" aria-pressed="false">cermin</button>
+        </div>
+      </div>
+
+      <div>
+        <p class="blok__judul">Tindakan</p>
+        <div class="tindakan">
+          <button class="tombol" type="button" id="urungkan" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h9a6 6 0 0 1 0 12H8"/></svg>
+            urungkan
+          </button>
+          <button class="tombol" type="button" id="ulangi" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 14l5-5-5-5"/><path d="M20 9h-9a6 6 0 0 0 0 12h5"/></svg>
+            ulangi
+          </button>
+          <button class="tombol" type="button" id="bersihkan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>
+            kosongkan
+          </button>
+          <button class="tombol tombol--utama" type="button" id="simpan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v5h6V4"/></svg>
+            simpan
+          </button>
+          <div class="ekspor">
+            <select id="skala" aria-label="Ukuran ekspor">
+              <option value="1">ekspor 1× (32 px)</option>
+              <option value="8" selected>ekspor 8× (256 px)</option>
+              <option value="16">ekspor 16× (512 px)</option>
+            </select>
+            <button class="tombol" type="button" id="ekspor">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 4v11"/><path d="M8 11l4 4 4-4"/><path d="M5 19h14"/></svg>
+              PNG
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="blok__judul">Galeri <span id="label-galeri">0</span></p>
+        <div class="galeri" id="galeri"></div>
+      </div>
+
+    </aside>
+  </section>
+
+  <section class="cara" id="cara">
+    <div class="cara__isi">
+      <div>
+        <h2>Empat langkah</h2>
+        <ol class="langkah">
+          <li><b>Pilih ukuran.</b> 16 untuk ikon, 32 untuk sprite, 48 kalau butuh detail lebih.</li>
+          <li><b>Gambar.</b> Pensil, isi, dan garis bekerja dengan satu tarikan. Cermin membantu membuat wajah atau badan yang simetris.</li>
+          <li><b>Simpan.</b> Gambar masuk ke galeri di perangkat ini, jadi masih ada saat halaman dibuka lagi.</li>
+          <li><b>Ekspor.</b> PNG 1×, 8×, atau 16× tanpa pengaburan — siap dipakai di halaman web atau aset game.</li>
+        </ol>
+      </div>
+
+      <div>
+        <h2>Pintasan papan tombol</h2>
+        <table class="pintasan">
+          <thead>
+            <tr><th scope="col">Tombol</th><th scope="col">Yang terjadi</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>B · E · G · L · I</td><td>Pensil, penghapus, isi, garis, pipet</td></tr>
+            <tr><td>X</td><td>Cermin kiri–kanan hidup atau mati</td></tr>
+            <tr><td>K</td><td>Kisi hidup atau mati</td></tr>
+            <tr><td>Ctrl / ⌘ + Z</td><td>Urungkan</td></tr>
+            <tr><td>Ctrl / ⌘ + Shift + Z</td><td>Ulangi</td></tr>
+            <tr><td>Ctrl / ⌘ + S</td><td>Simpan ke galeri</td></tr>
+          </tbody>
+        </table>
+        <p class="kaki__rinci" style="margin-top: 16px; color: var(--ink-2)">
+          Catatan: pintasan bekerja saat fokus tidak berada di kolom isian.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="kaki">
+  <div class="kaki__isi">
+    <p class="kaki__pernyataan">32 kolom. 32 baris. Tidak ada yang perlu dipasang.</p>
+    <p class="kaki__rinci">
+      Dibangun dengan HTML, CSS, dan JavaScript biasa — tanpa pustaka, tanpa peladen.
+      Gambar disimpan di <em>localStorage</em> peramban Anda dan tidak dikirim ke mana pun.
+      Kode sumber terbuka di <a href="https://github.com/atmajadesna/piksel">GitHub</a>, lisensi MIT.
+    </p>
+  </div>
+</footer>
+
+<p class="sr" id="kabar" role="status" aria-live="polite"></p>
+
+<noscript>
+  <p style="max-width: 60ch; margin: 24px auto; padding: 16px; border: 2px solid #16161a;">
+    Editor ini memerlukan JavaScript. Aktifkan JavaScript di peramban, lalu muat ulang halaman.
+  </p>
+</noscript>
+
+<script src="app.js?v=1" defer></script>
+</body>
+</html>

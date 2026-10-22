@@ -1,0 +1,63 @@
+/* Hallmark · macrostructure: Workbench · tone: utilitarian-print · anchor hue: orange
+ * theme: Riso · paper oklch(95.8% 0.016 88) · accent oklch(63% 0.185 44)
+ * display: Anton · body: Inter · mono: JetBrains Mono
+ * Hallmark · pre-emit critique: P5 H4 E5 S4 R5 V5
+ */
+
+:root {
+  /* kertas */
+  --paper: oklch(95.8% 0.016 88);
+  --paper-2: oklch(92.5% 0.02 86);
+  --paper-3: oklch(88% 0.024 84);
+
+  /* tinta */
+  --ink: oklch(23% 0.022 268);
+  --ink-2: oklch(38% 0.02 268);
+  --ink-3: oklch(53% 0.018 268);
+
+  /* dua tinta cetak */
+  --orange: oklch(63% 0.185 44);
+  --orange-deep: oklch(54% 0.17 40);
+  --blue: oklch(47% 0.145 258);
+  --blue-soft: oklch(47% 0.145 258 / 0.12);
+
+  /* garis */
+  --line: oklch(23% 0.022 268 / 0.14);
+  --line-strong: oklch(23% 0.022 268 / 0.3);
+  --focus: oklch(52% 0.19 250);
+
+  /* huruf */
+  --font-display: "Anton", "Arial Narrow", sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* ukuran huruf */
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-md: 0.9375rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.5rem;
+  --text-2xl: clamp(1.75rem, 3.4vw, 2.5rem);
+  --text-display: clamp(2.25rem, 6vw, 3.75rem);
+
+  /* jarak 4pt */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 72px;
+
+  /* radius — cetakan, bukan aplikasi */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+
+  /* gerak */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;
+  --dur-mid: 220ms;
+}
