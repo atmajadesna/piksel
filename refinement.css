@@ -1,0 +1,8 @@
+/* Pixel-editor workspace: preserve crisp canvas rendering and tool identity. */
+html,body{overflow-x:clip}
+h1,h2,h3{font-style:normal;overflow-wrap:anywhere}
+button,select,input{min-height:44px}
+button{touch-action:manipulation}
+:focus-visible{outline:3px solid currentColor;outline-offset:3px}
+.panel,.meja>*{min-width:0}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
